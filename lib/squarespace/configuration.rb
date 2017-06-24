@@ -5,7 +5,7 @@ module Squarespace
     attr_accessor :api_url, :api_key, :app_name
 
     def initialize(options)
-      self.api_url = options[:api_url] || "https://api.squarespace.com/#{Squarespace::API_VERSION}"
+      self.api_url = options[:api_url] || "https://api.squarespace.com"
 
       # No default values
       self.app_name = options[:app_name]
