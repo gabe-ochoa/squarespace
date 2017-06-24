@@ -37,6 +37,8 @@ describe Squarespace::Client do
     end
 
     it 'get a batch of orders' do
+      stub_faraday_request(stub_orders, 'get', '')
+
       orders = client.get_orders
       expect(orders.count).to be 3
     end

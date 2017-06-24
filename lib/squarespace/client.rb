@@ -13,14 +13,17 @@ module Squarespace
       @commerce_url = "#{Squarespace.configuration.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
 
+    def get_orders
+      order_response = commerce_request('get')
+    end
 
-    def commerce_request(method, route=nil, body=nil)
+    def commerce_request(method, route='', body=nil)
       connection(commerce_url).send(method.downcase) do |req|
         if method.eql?('post')
           req.headers['Content-Type'] = 'application/json'
         end
         req.url route
-        req.body = body
+        req.body = body unless body.nil?
       end
     end
 

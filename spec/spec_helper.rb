@@ -13,6 +13,19 @@ def test_configuration
     )
 end
 
+def stub_faraday_request(return_object, method, url='', body=nil)
+  request = double
+  expect(request).to receive(:url).with(url)
+  expect(request).to receive(:body).with(body)
+  expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
+    .and_yield(request)
+    .and_return(return_object)
+end
+
+def stub_orders
+
+end
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
