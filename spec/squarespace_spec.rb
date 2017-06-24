@@ -6,7 +6,7 @@ describe Squarespace do
   end
 
   it 'has an API version number' do
-    expect(Squarespace::API_VERSION).to be_a Integer
+    expect(Squarespace::API_VERSION).to be_a Float
     expect(Squarespace::API_VERSION).to be > 0
   end
 end
