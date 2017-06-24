@@ -6,6 +6,7 @@ describe Squarespace::Client do
   test_configuration
 
   let(:client) { Squarespace::Client.new }
+  let(:private_client) { client.instance_eval {  } }
 
   context 'For the Squarespace API' do
     it 'create a connection to squarespace' do
@@ -13,7 +14,7 @@ describe Squarespace::Client do
       expect(Faraday).to receive(:new).with(
         url: 'https://some_url.com',
         ssl: true)
-      client.connection
+      client.send('connection', test_url)
     end
 
     it 'make a GET request to the sqaurespace api' do

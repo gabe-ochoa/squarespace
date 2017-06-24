@@ -13,15 +13,15 @@ module Squarespace
       @commerce_url = "#{Squarespace.configuration.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
 
-
-    private
-
     def commerce_request(method, route=nil, body=nil)
 
     end
 
-    def connection
-      Faraday.new()
+
+    private
+
+    def connection(url)
+      Faraday.new(url: url, ssl: true)
     end
   end
 end
