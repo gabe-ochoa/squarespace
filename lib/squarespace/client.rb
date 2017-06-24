@@ -4,10 +4,11 @@ require 'faraday'
 require 'json'
 
 module Squarespace
-
   class Client
-    def initialize(opts)
+    attr_reader :commerce_url
 
+    def initialize(options = {})
+      @commerce_url = "#{Squarespace.configuration.api_url}/commerce/orders"
     end
   end
 end

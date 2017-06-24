@@ -7,7 +7,7 @@ describe Squarespace::Configuration do
     end
 
     it 'has an api_url' do
-      expect(test_configuration.api_url).to eq('https://api.squarespace.com/')
+      expect(test_configuration.api_url).to eq('https://api.squarespace.com/0.1')
     end
 
     it 'has an api_key' do
