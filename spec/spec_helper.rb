@@ -22,8 +22,16 @@ def stub_faraday_request(return_object, method, url='', body=nil)
     .and_return(return_object)
 end
 
-def stub_orders
+def stub_faraday_response(status, body)
+  stub_response = object_double('response', body: body, status: status)
+end
 
+def stub_orders_object
+  stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+end
+
+def load_json_fixture(path)
+  JSON.parse(File.read(path))
 end
 
 RSpec.configure do |config|

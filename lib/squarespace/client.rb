@@ -15,6 +15,7 @@ module Squarespace
 
     def get_orders
       order_response = commerce_request('get')
+
     end
 
     def commerce_request(method, route='', body=nil)
