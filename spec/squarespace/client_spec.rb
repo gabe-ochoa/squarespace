@@ -8,16 +8,24 @@ describe Squarespace::Client do
   let(:client) { Squarespace::Client.new }
 
   context 'For the Squarespace API' do
+    it 'create a connection to squarespace' do
+      test_url = 'https://some_url.com'
+      expect(Faraday).to receive(:new).with(
+        url: 'https://some_url.com',
+        ssl: true)
+      client.connection
+    end
+
     it 'make a GET request to the sqaurespace api' do
       test_route = '/some/test/route'
       test_method = 'GET'
       expect(Faraday).to receive(:get).with(test_method, test_route)
 
-      client.request(test_method, test_route)
+      client.commerce_request(test_method, test_route)
     end
 
     it 'make a POST request with a json body to the sqaurespace api' do
-      expect(client.request('POST', '/some/test/route', body = { "test": "body" }))
+      expect(client.commerce_request('POST', '/some/test/route', body = { "test": "body" }))
     end
   end
 

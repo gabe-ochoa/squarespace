@@ -9,8 +9,19 @@ module Squarespace
 
     COMMERCE_API_VERSION = 0.1
 
-    def initialize(options = {})
+    def initialize(options={})
       @commerce_url = "#{Squarespace.configuration.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
+    end
+
+
+    private
+
+    def commerce_request(method, route=nil, body=nil)
+
+    end
+
+    def connection
+      Faraday.new()
     end
   end
 end
