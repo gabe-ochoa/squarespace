@@ -1,12 +1,12 @@
 # SquareSpace Commerce API
 
-Ruby gem for interacting with the SquareSpace Commerce API.
+Ruby gem for interacting with the Squarespace API.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'squarespace-commerce'
+    gem 'squarespace'
 
 And then execute:
 
@@ -14,21 +14,21 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install squarespace-commerce
+    $ gem install squarespace
 
 
 # Example usage
 
 ## Configuration
 
-    SquareSpace.configure(
+    Squarespace.configure(
       app_name: 'YOUR_APP_NAME'
       app_secret: 'YOUR_CLIENT_SECRET'
     )
 
 ## Initializing the client
 
-    client = SquareSpace::Commerce::Client.new
+    client = Squarespace::Client.new
 
 # Testing
 
