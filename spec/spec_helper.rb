@@ -16,7 +16,6 @@ end
 def stub_faraday_request(return_object, method, url='', body=nil)
   request = double
   expect(request).to receive(:url).with(url)
-  expect(request).to receive(:body).with(body)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
     .and_return(return_object)

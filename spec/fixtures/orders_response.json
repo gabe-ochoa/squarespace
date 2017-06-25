@@ -47,6 +47,26 @@
     } ],
     "customizations" : null,
     "imageUrl" : "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w"
+  },
+  {
+    "id" : "585d4975dee9f31a60284a16",
+    "sku" : "SQ3381024",
+    "productId" : "565c8f3da7c8a3cf71d5fd0a",
+    "productName" : "Product",
+    "quantity" : 1,
+    "unitPricePaid" : {
+      "value" : "55.00",
+      "currency" : "USD"
+    },
+    "variantOptions" : [ {
+      "value" : "Large",
+      "optionName" : "Size"
+    }, {
+      "value" : "Black",
+      "optionName" : "Color"
+    } ],
+    "customizations" : null,
+    "imageUrl" : "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w"
   } ],
   "internalNotes" : [ {
       "content" : "First note"

@@ -40,7 +40,7 @@ describe Squarespace::Client do
       stub_faraday_request(stub_orders_object, 'get', '')
 
       orders = client.get_orders
-      expect(orders.count).to be 3
+      expect(orders.lineItems.count).to be 2
     end
   end
 end

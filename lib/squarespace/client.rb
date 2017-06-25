@@ -1,5 +1,6 @@
 require 'Squarespace'
 require 'Squarespace/configuration'
+require 'Squarespace/order'
 require 'faraday'
 require 'json'
 
@@ -15,11 +16,11 @@ module Squarespace
 
     def get_orders
       order_response = commerce_request('get')
-
+      Order.new(order_response.body)
     end
 
     def commerce_request(method, route='', body=nil)
-      connection(commerce_url).send(method.downcase) do |req|
+      response = connection(commerce_url).send(method.downcase) do |req|
         if method.eql?('post')
           req.headers['Content-Type'] = 'application/json'
         end
