@@ -19,11 +19,16 @@ module Squarespace
       Order.new(order_response.body)
     end
 
-    def commerce_request(method, route='', body=nil)
+    def commerce_request(method, route='', headers={}, parameters={}, body=nil)
       response = connection(commerce_url).send(method.downcase) do |req|
         if method.eql?('post')
           req.headers['Content-Type'] = 'application/json'
         end
+        parameters.each { |k,v| req.params["#{k}"] = v } if parameters.any?
+        headers.each { |k,v| req.headers["#{k}"] = v } if headers.any?
+
+        # We always need an Authorization header
+        req.headers['Authorization'] = "Bearer #{Squarespace.configuration.api_key}"
         req.url route
         req.body = body unless body.nil?
       end

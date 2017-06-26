@@ -13,8 +13,11 @@ def test_configuration
     )
 end
 
-def stub_faraday_request(return_object, method, url='', body=nil)
+def stub_faraday_request(return_object, method, url='', headers={}, parameters={}, body=nil)
   request = double
+  expect(request).to receive(:body).with(body) unless body.nil?
+  expect(request).to receive(:headers).with(headers)
+  expect(request).to receive(:headers).with(headers) unless headers.nil?
   expect(request).to receive(:url).with(url)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
@@ -27,6 +30,10 @@ end
 
 def stub_orders_object
   stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+end
+
+def stub_fulfilled_orders_object
+  stub_faraday_response(200, load_json_fixture('spec/fixtures/fulfilled_orders_response.json'))
 end
 
 def load_json_fixture(path)

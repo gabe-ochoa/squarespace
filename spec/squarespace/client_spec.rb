@@ -42,5 +42,12 @@ describe Squarespace::Client do
       orders = client.get_orders
       expect(orders.lineItems.count).to be 2
     end
+
+    it 'get a batch of orders that is not fulfilled' do
+      stub_faraday_request(stub_fulfilled_orders_object, 'get', '')
+
+      orders = client.get_unfulfilled_orders
+      expect(orders.lineItems.count).to be 1
+    end
   end
 end
