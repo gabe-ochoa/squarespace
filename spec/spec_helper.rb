@@ -14,10 +14,16 @@ def test_configuration
 end
 
 def stub_faraday_request(return_object, method, url='', headers={}, parameters={}, body=nil)
+  # Add in default headers that Squarespace excepts on every request
+  headers.merge({
+    "Content-Type" => "application/json",
+    "Authorization" => "Bearer test_key"
+  })
+
   request = double
   expect(request).to receive(:body).with(body) unless body.nil?
+  expect(request).to receive(:parameters).with(parameters) unless headers.nil?
   expect(request).to receive(:headers).with(headers)
-  expect(request).to receive(:headers).with(headers) unless headers.nil?
   expect(request).to receive(:url).with(url)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
@@ -28,16 +34,32 @@ def stub_faraday_response(status, body)
   stub_response = object_double('response', body: body, status: status)
 end
 
+def stub_order_object
+  stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+end
+
 def stub_orders_object
   stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+end
+
+def stub_pending_orders_object
+  stub_faraday_response(200, load_json_fixture('spec/fixtures/pending_orders_response.json'))
 end
 
 def stub_fulfilled_orders_object
   stub_faraday_response(200, load_json_fixture('spec/fixtures/fulfilled_orders_response.json'))
 end
 
+def stub_fulfill_order_object
+  stub_faraday_response(204, nil)
+end
+
 def load_json_fixture(path)
-  JSON.parse(File.read(path))
+  JSON.parse(load_fixture(path))
+end
+
+def load_fixture(path)
+  File.read(path)
 end
 
 RSpec.configure do |config|

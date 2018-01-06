@@ -1,120 +1,146 @@
 {
-  "id" : "585d498fdee9f31a60284a37",
-  "orderNumber" : "3",
-  "createdOn" : "2016-12-23T15:58:07.187Z",
-  "modifiedOn" : "2016-12-23T15:58:07.187Z",
-  "testmode" : true,
-  "customerEmail" : "foo@example.com",
-  "billingAddress" : {
-    "firstName" : "Bob",
-    "lastName" : "Loblaw",
-    "address1" : "459 Broadway",
-    "address2" : null,
-    "city" : "New York",
-    "state" : "NY",
-    "countryCode" : "US",
-    "postalCode" : "10003",
-    "phone": "5553334444"
+  "pagination": {
+    "hasNextPage": false,
+    "nextPageCursor": null,
+    "nextPageUrl": null
   },
-  "shippingAddress" : {
-    "firstName" : "Bob",
-    "lastName" : "Loblaw",
-    "address1" : "459 Broadway",
-    "address2" : null,
-    "city" : "New York",
-    "state" : "NY",
-    "countryCode" : "US",
-    "postalCode" : "10003",
-    "phone": "5553334444"
-  },
-  "fulfillmentStatus" : "FULFILLED",
-  "lineItems" : [ {
-    "id" : "585d4975dee9f31a60284a16",
-    "sku" : "SQ3381024",
-    "productId" : "565c8f3da7c8a3cf71d5fd0a",
-    "productName" : "Product",
-    "quantity" : 1,
-    "unitPricePaid" : {
-      "value" : "55.00",
-      "currency" : "USD"
-    },
-    "variantOptions" : [ {
-      "value" : "Large",
-      "optionName" : "Size"
-    }, {
-      "value" : "Black",
-      "optionName" : "Color"
-    } ],
-    "customizations" : null,
-    "imageUrl" : "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w"
-  },
-  {
-    "id" : "585d4975dee9f31a60284a16",
-    "sku" : "SQ3381024",
-    "productId" : "565c8f3da7c8a3cf71d5fd0a",
-    "productName" : "Product",
-    "quantity" : 1,
-    "unitPricePaid" : {
-      "value" : "55.00",
-      "currency" : "USD"
-    },
-    "variantOptions" : [ {
-      "value" : "Large",
-      "optionName" : "Size"
-    }, {
-      "value" : "Black",
-      "optionName" : "Color"
-    } ],
-    "customizations" : null,
-    "imageUrl" : "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w"
-  } ],
-  "internalNotes" : [ {
-      "content" : "First note"
-    }, {
-      "content" : "Second note"
-  } ],
-  "shippingLines" : [ {
-    "method" : "Flat Rate",
-    "amount" : {
-      "value" : "1.00",
-      "currency" : "USD"
+  "result": [
+    {
+      "billingAddress": {
+        "address1": "459 Broadway",
+        "address2": null,
+        "city": "New York",
+        "countryCode": "US",
+        "firstName": "Bob",
+        "lastName": "Loblaw",
+        "phone": "5553334444",
+        "postalCode": "10003",
+        "state": "NY"
+      },
+      "createdOn": "2016-12-23T15:58:07.187Z",
+      "customerEmail": "foo@example.com",
+      "discountLines": [
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "description": "Fall Sale",
+          "promoCode": "FALLSALE"
+        }
+      ],
+      "discountTotal": {
+        "currency": "USD",
+        "value": "1.00"
+      },
+      "formSubmission": [
+        {
+          "label": "How did you hear about us?",
+          "value": "Facebook"
+        }
+      ],
+      "fulfillmentStatus": "FULFILLED",
+      "fulfillments": [],
+      "grandTotal": {
+        "currency": "USD",
+        "value": "57.70"
+      },
+      "id": "585d498fdee9f31a60284a37",
+      "internalNotes": [
+        {
+          "content": "First note"
+        },
+        {
+          "content": "Second note"
+        }
+      ],
+      "lineItems": [
+        {
+          "customizations": null,
+          "id": "585d4975dee9f31a60284a16",
+          "imageUrl": "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w",
+          "productId": "565c8f3da7c8a3cf71d5fd0a",
+          "productName": "Product",
+          "quantity": 1,
+          "sku": "SQ3381024",
+          "unitPricePaid": {
+            "currency": "USD",
+            "value": "55.00"
+          },
+          "variantOptions": [
+            {
+              "optionName": "Size",
+              "value": "Large"
+            },
+            {
+              "optionName": "Color",
+              "value": "Black"
+            }
+          ]
+        },
+        {
+          "customizations": null,
+          "id": "585d4975dee9f31a60284a16",
+          "imageUrl": "https://static.squarespace.com/universal/commerce/images/brine-32oz-spring-mix-v2.jpg?format=300w",
+          "productId": "565c8f3da7c8a3cf71d5fd0a",
+          "productName": "Product",
+          "quantity": 1,
+          "sku": "SQ3381024",
+          "unitPricePaid": {
+            "currency": "USD",
+            "value": "55.00"
+          },
+          "variantOptions": [
+            {
+              "optionName": "Size",
+              "value": "Large"
+            },
+            {
+              "optionName": "Color",
+              "value": "Black"
+            }
+          ]
+        }
+      ],
+      "modifiedOn": "2016-12-23T15:58:07.187Z",
+      "orderNumber": "3",
+      "refundedTotal": {
+        "currency": "USD",
+        "value": "0.00"
+      },
+      "shippingAddress": {
+        "address1": "459 Broadway",
+        "address2": null,
+        "city": "New York",
+        "countryCode": "US",
+        "firstName": "Bob",
+        "lastName": "Loblaw",
+        "phone": "5553334444",
+        "postalCode": "10003",
+        "state": "NY"
+      },
+      "shippingLines": [
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "method": "Flat Rate"
+        }
+      ],
+      "shippingTotal": {
+        "currency": "USD",
+        "value": "1.00"
+      },
+      "subtotal": {
+        "currency": "USD",
+        "value": "55.00"
+      },
+      "taxTotal": {
+        "currency": "USD",
+        "value": "2.70"
+      },
+      "testmode": true
     }
-  } ],
-  "discountLines" : [ {
-    "description" : "Fall Sale",
-    "amount" : {
-      "value" : "1.00",
-      "currency" : "USD"
-    },
-    "promoCode" : "FALLSALE"
-  } ],
-  "formSubmission" : [ {
-    "label" : "How did you hear about us?",
-    "value" : "Facebook"
-  } ],
-  "fulfillments" : [ ],
-  "subtotal" : {
-    "value" : "55.00",
-    "currency" : "USD"
-  },
-  "shippingTotal" : {
-    "value" : "1.00",
-    "currency" : "USD"
-  },
-  "discountTotal" : {
-    "value" : "1.00",
-    "currency" : "USD"
-  },
-  "taxTotal" : {
-    "value" : "2.70",
-    "currency" : "USD"
-  },
-  "refundedTotal" : {
-    "value" : "0.00",
-    "currency" : "USD"
-  },
-  "grandTotal" : {
-    "value" : "57.70",
-    "currency" : "USD"
-  }
+  ]
 }
