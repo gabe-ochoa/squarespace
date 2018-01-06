@@ -46,11 +46,10 @@ describe Squarespace::Client do
     end
 
     it 'get a batch of orders' do
-      skip('TODO')
-      stub_faraday_request(stub_orders_object, 'get', '')
+      stub_faraday_request(stub_orders_object, 'get', "#{base_commerce_url}")
 
       orders = client.get_orders
-      expect(orders.count).to be 2
+      expect(orders.result.count).to be 2
     end
 
     it 'get a batch of orders that is status PENDING' do

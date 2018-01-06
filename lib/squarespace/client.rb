@@ -12,14 +12,22 @@ module Squarespace
     COMMERCE_API_VERSION = 0.1
 
     def initialize(options={})
+      @logger = Logger.new(STDOUT)
+      @logger.level = options.delete('log_level') || 'DEBUG'
       @config = Squarespace::Config.new(options)
       @commerce_url = "#{@config.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
-      @logger = Logger.new(STDOUT)
     end
 
     def get_order(id)
       order_response = commerce_request('get', id.to_s)
-      logger.info("Order response: #{order_response.body}")
+      logger.debug("Order response: #{order_response.body}")
+      Order.new(JSON.parse(order_response.body))
+    end
+
+
+    def get_orders
+      order_response = commerce_request('get')
+      logger.debug("Order response: #{order_response.body}")
       Order.new(JSON.parse(order_response.body))
     end
 
