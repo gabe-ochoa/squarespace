@@ -9,6 +9,7 @@ describe Squarespace::Client do
   let(:client) { Squarespace::Client.new }
   let(:private_client) { client.instance_eval {  } }
   let(:base_commerce_url) { "https://api.squarespace.com/0.1/commerce/orders" }
+  let(:order_id) { '585d498fdee9f31a60284a37' }
 
   context 'For the Squarespace API' do
     it 'create a connection to squarespace' do
@@ -38,9 +39,9 @@ describe Squarespace::Client do
     end
 
     it 'gets an order' do
-      stub_faraday_request(stub_order_object, 'get', "#{base_commerce_url}/585d498fdee9f31a60284a37")
+      stub_faraday_request(stub_order_object, 'get', "#{base_commerce_url}/#{order_id}")
 
-      order = client.get_order
+      order = client.get_order(order_id)
       expect(order.lineItems.count).to be 1
     end
 
@@ -75,7 +76,6 @@ describe Squarespace::Client do
 
     it 'fulfills an order' do
       skip('TODO')
-      order_id = '585d498fdee9f31a60284a37'
       shipments = [{
         tracking_number: 'test_tracking_number1',
         tracking_url: 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=test_tracking_number2',

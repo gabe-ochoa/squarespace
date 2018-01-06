@@ -13,18 +13,23 @@ def test_configuration
     )
 end
 
-def stub_faraday_request(return_object, method, url='', headers={}, parameters={}, body=nil)
+def stub_faraday_request(return_object, method, url='', headers={}, params={}, body=nil)
   # Add in default headers that Squarespace excepts on every request
   headers.merge({
     "Content-Type" => "application/json",
     "Authorization" => "Bearer test_key"
   })
 
-  request = double
+  request = instance_double(Faraday::Request, 
+    headers: {}, 
+    params: {},
+    url: nil,
+    body: nil)
+
   expect(request).to receive(:body).with(body) unless body.nil?
-  expect(request).to receive(:parameters).with(parameters) unless headers.nil?
-  expect(request).to receive(:headers).with(headers)
-  expect(request).to receive(:url).with(url)
+  expect(request).to receive(:params) unless params.empty?
+  expect(request).to receive(:headers)
+  expect(request).to receive(:url)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
     .and_return(return_object)
@@ -35,7 +40,7 @@ def stub_faraday_response(status, body)
 end
 
 def stub_order_object
-  stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+  stub_faraday_response(200, load_json_fixture('spec/fixtures/order_response.json'))
 end
 
 def stub_orders_object

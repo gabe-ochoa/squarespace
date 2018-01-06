@@ -14,7 +14,7 @@ module Squarespace
       @commerce_url = "#{Squarespace.configuration.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
 
-    def get_orders
+    def get_order(id)
       order_response = commerce_request('get')
       Order.new(order_response.body)
     end
