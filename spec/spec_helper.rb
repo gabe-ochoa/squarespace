@@ -6,13 +6,6 @@ SimpleCov.start
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'squarespace'
 
-def test_configuration
-  Squarespace.configure(
-    app_name: 'test_app',
-    api_key: 'test_key'
-    )
-end
-
 def stub_faraday_request(return_object, method, url='', headers={}, params={}, body=nil)
   # Add in default headers that Squarespace excepts on every request
   headers.merge({

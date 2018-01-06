@@ -4,11 +4,12 @@ require 'json'
 
 describe Squarespace::Client do
 
-  test_configuration
-
-  let(:client) { Squarespace::Client.new }
+  let(:client) { Squarespace::Client.new(app_name: app_name, api_key: api_key) }
   let(:private_client) { client.instance_eval {  } }
-  let(:base_commerce_url) { "https://api.squarespace.com/0.1/commerce/orders" }
+  let(:api_url) { 'https://api.squarespace.com' }
+  let(:app_name) { 'test_app' }
+  let(:api_key) { 'test_key' } 
+  let(:base_commerce_url) { "#{api_url}/0.1/commerce/orders" }
   let(:order_id) { '585d498fdee9f31a60284a37' }
 
   context 'For the Squarespace API' do
@@ -28,7 +29,6 @@ describe Squarespace::Client do
   end
 
   context 'For the Squarespace Commerce API' do
-
     it 'have an API version number' do
       expect(Squarespace::Client::COMMERCE_API_VERSION).to be_a Float
       expect(Squarespace::Client::COMMERCE_API_VERSION).to be > 0
@@ -38,14 +38,14 @@ describe Squarespace::Client do
       expect(client.commerce_url).to eq base_commerce_url
     end
 
-    it 'gets an order' do
+    it 'get an order' do
       stub_faraday_request(stub_order_object, 'get', "#{base_commerce_url}/#{order_id}")
 
       order = client.get_order(order_id)
       expect(order.lineItems.count).to be 1
     end
 
-    it 'gets a batch of orders' do
+    it 'get a batch of orders' do
       skip('TODO')
       stub_faraday_request(stub_orders_object, 'get', '')
 
@@ -74,7 +74,7 @@ describe Squarespace::Client do
       end
     end
 
-    it 'fulfills an order' do
+    it 'fulfill an order' do
       skip('TODO')
       shipments = [{
         tracking_number: 'test_tracking_number1',

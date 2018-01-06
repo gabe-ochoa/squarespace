@@ -11,7 +11,8 @@ module Squarespace
     COMMERCE_API_VERSION = 0.1
 
     def initialize(options={})
-      @commerce_url = "#{Squarespace.configuration.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
+      @config = Squarespace::Config.new(options)
+      @commerce_url = "#{@config.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
 
     def get_order(id)
