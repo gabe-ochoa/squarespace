@@ -24,11 +24,20 @@ module Squarespace
       Order.new(JSON.parse(order_response.body))
     end
 
+    def get_orders(fulfillment_status = nil)
+      if fulfillment_status.nil?
+        order_response = commerce_request('get')
+      else
+        order_response = commerce_request('get', '', {}, 
+          {"fulfillmentStatus"=>fulfillment_status.upcase})
+      end
 
-    def get_orders
-      order_response = commerce_request('get')
       logger.debug("Order response: #{order_response.body}")
       Order.new(JSON.parse(order_response.body))
+    end
+
+    def get_pending_orders
+      get_orders('pending')
     end
 
     def commerce_request(method, route='', headers={}, parameters={}, body=nil)
