@@ -33,27 +33,23 @@ def stub_faraday_response(status, body)
 end
 
 def stub_order_object
-  stub_faraday_response(200, load_json_fixture('spec/fixtures/order_response.json'))
+  stub_faraday_response(200, load_fixture('spec/fixtures/order_response.json'))
 end
 
 def stub_orders_object
-  stub_faraday_response(200, load_json_fixture('spec/fixtures/orders_response.json'))
+  stub_faraday_response(200, load_fixture('spec/fixtures/orders_response.json'))
 end
 
 def stub_pending_orders_object
-  stub_faraday_response(200, load_json_fixture('spec/fixtures/pending_orders_response.json'))
+  stub_faraday_response(200, load_fixture('spec/fixtures/pending_orders_response.json'))
 end
 
 def stub_fulfilled_orders_object
-  stub_faraday_response(200, load_json_fixture('spec/fixtures/fulfilled_orders_response.json'))
+  stub_faraday_response(200, load_fixture('spec/fixtures/fulfilled_orders_response.json'))
 end
 
 def stub_fulfill_order_object
   stub_faraday_response(204, nil)
-end
-
-def load_json_fixture(path)
-  JSON.parse(load_fixture(path))
 end
 
 def load_fixture(path)
