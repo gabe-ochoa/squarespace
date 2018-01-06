@@ -40,6 +40,10 @@ module Squarespace
       get_orders('pending')
     end
 
+    def get_fulfilled_orders
+      get_orders('fulfilled')
+    end
+
     def commerce_request(method, route='', headers={}, parameters={}, body=nil)
       response = connection(@commerce_url).send(method.downcase) do |req|
         if method.eql?('post')

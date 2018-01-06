@@ -64,10 +64,11 @@ describe Squarespace::Client do
     end
 
     it 'get a batch of orders that is status FULFILLED' do
-      skip('TODO')
-      stub_faraday_request(stub_fulfilled_orders_object, 'get', '')
+      stub_faraday_request(stub_pending_orders_object, 'get', 
+        base_commerce_url, {}, {"fulfillmentStatus"=>"FULFILLED"})
 
       orders = client.get_fulfilled_orders
+      expect(orders.result.count).to be 2
       orders.each do |order|
         expect(order.fulfillmentStatus).to eq 'FULFILLED'
       end
