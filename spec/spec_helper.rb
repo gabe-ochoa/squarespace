@@ -21,7 +21,7 @@ def stub_faraday_request(return_object, method, url='', headers={}, params={}, b
 
   expect(request).to receive(:body=).with(body) unless body.nil?
   expect(request).to receive(:params) unless params.empty?
-  expect(request).to receive(:headers=).with(headers) unless headers.empty?
+  expect(request).to receive(:headers) unless headers.empty?
   expect(request).to receive(:url).with(url)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
@@ -29,7 +29,13 @@ def stub_faraday_request(return_object, method, url='', headers={}, params={}, b
 end
 
 def stub_faraday_response(status, body)
-  stub_response = object_double('response', body: body, status: status)
+  if (200..299).include?(status)
+    success = true
+  else
+    success = false
+  end
+
+  stub_response = object_double('response', body: body, status: status, success?: success)
 end
 
 def stub_order_object

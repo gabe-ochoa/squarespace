@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'faraday'
 require 'json'
+require 'timecop'
 
 describe Squarespace::Client do
 
@@ -75,6 +76,12 @@ describe Squarespace::Client do
     end
 
     it 'fulfill an order' do
+      Timecop.freeze
+      body_fixture = JSON.parse(load_fixture('spec/fixtures/fulfill_order_body.json'), symbolize_names: true)
+      body_fixture[:shipments].each do |s|
+        s[:shipDate] = Time.now.iso8601
+      end
+
       shipments = [{
         tracking_number: 'test_tracking_number1',
         tracking_url: 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=test_tracking_number2',
@@ -82,18 +89,16 @@ describe Squarespace::Client do
         service: 'ground'
       },{
         tracking_number: 'test_tracking_number2',
-        tracking_url: '',
+        tracking_url: nil,
         carrier_name: 'USPS',
-        service: 'prioritt'
+        service: 'priority'
       }]
       send_notification = true
 
       stub_faraday_request(stub_fulfill_order_object, 
-        'get', 
-        "#{order_id}/fulfillments",
+        'get', "#{order_id}/fulfillments",
         {"Content-Type"=>"application/json","Authorization"=>"Bearer test_key"},
-        {},
-        JSON.parse(load_fixture('spec/fixtures/fulfill_order_body.json'), symbolize_names: true))
+        {}, body_fixture)
 
       expect(client.fulfill_order(order_id, shipments, send_notification)).to be true
     end

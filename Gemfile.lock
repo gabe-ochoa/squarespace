@@ -46,6 +46,7 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.1)
     slop (3.6.0)
+    timecop (0.9.1)
     webmock (3.0.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -60,7 +61,8 @@ DEPENDENCIES
   rspec
   simplecov
   squarespace!
+  timecop
   webmock
 
 BUNDLED WITH
-   1.15.1
+   1.16.1

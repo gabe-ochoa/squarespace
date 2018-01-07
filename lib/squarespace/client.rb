@@ -68,9 +68,9 @@ module Squarespace
         shipments_arry << {
           "carrierName": shipment[:carrier_name],
           "service": shipment[:service],
-          "shipDate": Date.today,
+          "shipDate": Time.now.iso8601,
           "trackingNumber": shipment[:tracking_number],
-          "trackingUrl": [:tracking_url]
+          "trackingUrl": shipment[:tracking_url]
         }
       end
       
@@ -80,6 +80,8 @@ module Squarespace
       }
       
       response = commerce_request('get', "#{order_id}/fulfillments", {}, {}, request_body)
+
+      response.success?
     end
 
     def commerce_request(method, route='', headers={}, parameters={}, body=nil)
