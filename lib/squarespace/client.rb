@@ -57,7 +57,7 @@ module Squarespace
       #   service: 'ground'
       # },{
       #   tracking_number: 'test_tracking_number2',
-      #   tracking_url: '',
+      #   tracking_url: nil,
       #   carrier_name: 'USPS',
       #   service: 'prioritt'
       # }]
