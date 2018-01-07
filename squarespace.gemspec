@@ -7,9 +7,12 @@ Gem::Specification.new do |spec|
   spec.name          = "squarespace"
   spec.version       = Squarespace::VERSION
   spec.summary       = %q{Ruby interface to the Squarespace API}
-  spec.description   = %q{Ruby interface to the SquareSpace API}
+  spec.description   = %q{Ruby interface to the Squarespace API}
   spec.homepage      = "https://github.com/gabe-ochoa/squarespace"
   spec.author        = 'Gabe Ochoa'
+  spec.email            = 'gabeochoa@gmail.com'
+  spec.homepage         = 'http://rubygems.org/gems/squarespace'
+  spec.license          = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

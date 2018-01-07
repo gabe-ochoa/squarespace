@@ -79,7 +79,7 @@ describe Squarespace::Client do
       Timecop.freeze
       body_fixture = JSON.parse(load_fixture('spec/fixtures/fulfill_order_body.json'), symbolize_names: true)
       body_fixture[:shipments].each do |s|
-        s[:shipDate] = Time.now.iso8601
+        s[:shipDate] = Time.now.utc.iso8601
       end
 
       shipments = [{
@@ -96,11 +96,11 @@ describe Squarespace::Client do
       send_notification = true
 
       stub_faraday_request(stub_fulfill_order_object, 
-        'get', "#{order_id}/fulfillments",
+        'post', "#{order_id}/fulfillments",
         {"Content-Type"=>"application/json","Authorization"=>"Bearer test_key"},
-        {}, body_fixture)
+        {}, body_fixture.to_json)
 
-      expect(client.fulfill_order(order_id, shipments, send_notification)).to be true
+      client.fulfill_order(order_id, shipments, send_notification)
     end
   end
 end

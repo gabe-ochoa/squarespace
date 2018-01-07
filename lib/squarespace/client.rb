@@ -4,6 +4,7 @@ require 'Squarespace/order'
 require 'faraday'
 require 'json'
 require 'logger'
+require 'time'
 
 module Squarespace
   class Client
@@ -68,7 +69,7 @@ module Squarespace
         shipments_arry << {
           "carrierName": shipment[:carrier_name],
           "service": shipment[:service],
-          "shipDate": Time.now.iso8601,
+          "shipDate": "#{Time.now.utc.iso8601}",
           "trackingNumber": shipment[:tracking_number],
           "trackingUrl": shipment[:tracking_url]
         }
@@ -79,9 +80,7 @@ module Squarespace
         "shouldSendNotification": send_notification
       }
       
-      response = commerce_request('get', "#{order_id}/fulfillments", {}, {}, request_body)
-
-      response.success?
+      commerce_request('post', "#{order_id}/fulfillments", {}, {}, request_body.to_json)
     end
 
     def commerce_request(method, route='', headers={}, parameters={}, body=nil)
