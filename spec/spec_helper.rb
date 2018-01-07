@@ -19,10 +19,10 @@ def stub_faraday_request(return_object, method, url='', headers={}, params={}, b
     url: nil,
     body: nil)
 
-  expect(request).to receive(:body).with(body) unless body.nil?
+  expect(request).to receive(:body=).with(body) unless body.nil?
   expect(request).to receive(:params) unless params.empty?
-  expect(request).to receive(:headers)
-  expect(request).to receive(:url)
+  expect(request).to receive(:headers=).with(headers) unless headers.empty?
+  expect(request).to receive(:url).with(url)
   expect_any_instance_of(Faraday::Connection).to receive(method.to_sym)
     .and_yield(request)
     .and_return(return_object)
@@ -50,6 +50,10 @@ end
 
 def stub_fulfill_order_object
   stub_faraday_response(204, nil)
+end
+
+def load_json_fixture(path)
+  File.read(path)
 end
 
 def load_fixture(path)

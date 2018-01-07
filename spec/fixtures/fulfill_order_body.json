@@ -5,7 +5,7 @@
       "service": "overnight",
       "shipDate": "2017-01-29T22:19:26.980Z",
       "trackingNumber": "test_tracking_number1",
-      "	": null
+      "trackingUrl": null
     },
     {
       "carrierName": "Usps",

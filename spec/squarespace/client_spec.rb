@@ -39,14 +39,14 @@ describe Squarespace::Client do
     end
 
     it 'get an order' do
-      stub_faraday_request(stub_order_object, 'get', "#{base_commerce_url}/#{order_id}")
+      stub_faraday_request(stub_order_object, 'get', order_id)
 
       order = client.get_order(order_id)
       expect(order.lineItems.count).to be 1
     end
 
     it 'get a batch of orders' do
-      stub_faraday_request(stub_orders_object, 'get', "#{base_commerce_url}")
+      stub_faraday_request(stub_orders_object, 'get')
 
       orders = client.get_orders
       expect(orders.result.count).to be 2
@@ -54,7 +54,7 @@ describe Squarespace::Client do
 
     it 'get a batch of orders that is status PENDING' do
       stub_faraday_request(stub_pending_orders_object, 'get', 
-        base_commerce_url, {}, {"fulfillmentStatus"=>"PENDING"})
+        '', {}, {"fulfillmentStatus"=>"PENDING"})
 
       orders = client.get_pending_orders
       expect(orders.result.count).to be 2
@@ -65,7 +65,7 @@ describe Squarespace::Client do
 
     it 'get a batch of orders that is status FULFILLED' do
       stub_faraday_request(stub_pending_orders_object, 'get', 
-        base_commerce_url, {}, {"fulfillmentStatus"=>"FULFILLED"})
+        '', {}, {"fulfillmentStatus"=>"FULFILLED"})
 
       orders = client.get_fulfilled_orders
       expect(orders.result.count).to be 2
@@ -75,26 +75,25 @@ describe Squarespace::Client do
     end
 
     it 'fulfill an order' do
-      skip('TODO')
       shipments = [{
         tracking_number: 'test_tracking_number1',
         tracking_url: 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=test_tracking_number2',
-        carrierName: 'USPS',
+        carrier_name: 'USPS',
         service: 'ground'
       },{
         tracking_number: 'test_tracking_number2',
         tracking_url: '',
-        carrierName: 'USPS',
+        carrier_name: 'USPS',
         service: 'prioritt'
       }]
+      send_notification = true
 
-      stub_faraday_request(stub_order_object, 
+      stub_faraday_request(stub_fulfill_order_object, 
         'get', 
-        "#{base_commerce_url}/#{order_id}/fulfillments",
+        "#{order_id}/fulfillments",
         {"Content-Type"=>"application/json","Authorization"=>"Bearer test_key"},
         {},
-        load_fixture('spec/fixtures/fulfill_order_body.json')
-        )
+        JSON.parse(load_fixture('spec/fixtures/fulfill_order_body.json'), symbolize_names: true))
 
       expect(client.fulfill_order(order_id, shipments, send_notification)).to be true
     end

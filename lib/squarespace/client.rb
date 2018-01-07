@@ -13,7 +13,7 @@ module Squarespace
 
     def initialize(options={})
       @logger = Logger.new(STDOUT)
-      @logger.level = options.delete('log_level') || 'DEBUG'
+      @logger.level = options.delete('log_level') || 'INFO'
       @config = Squarespace::Config.new(options)
       @commerce_url = "#{@config.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
@@ -28,6 +28,7 @@ module Squarespace
       if fulfillment_status.nil?
         order_response = commerce_request('get')
       else
+        # binding.pry
         order_response = commerce_request('get', '', {}, 
           {"fulfillmentStatus"=>fulfillment_status.upcase})
       end
@@ -42,6 +43,43 @@ module Squarespace
 
     def get_fulfilled_orders
       get_orders('fulfilled')
+    end
+
+    def fulfill_order(order_id, shipments, send_notification=true)
+      # fulfill_order(string, array[hash], boolean)
+      #
+      # Shipment array example:
+      # 
+      # [{
+      #   tracking_number: 'test_tracking_number1',
+      #   tracking_url: 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=test_tracking_number2',
+      #   carrier_name: 'USPS',
+      #   service: 'ground'
+      # },{
+      #   tracking_number: 'test_tracking_number2',
+      #   tracking_url: '',
+      #   carrier_name: 'USPS',
+      #   service: 'prioritt'
+      # }]
+
+      shipments_arry = []
+      
+      shipments.each do |shipment|
+        shipments_arry << {
+          "carrierName": shipment[:carrier_name],
+          "service": shipment[:service],
+          "shipDate": Date.today,
+          "trackingNumber": shipment[:tracking_number],
+          "trackingUrl": [:tracking_url]
+        }
+      end
+      
+      request_body = {
+        "shipments": shipments_arry,
+        "shouldSendNotification": send_notification
+      }
+      
+      response = commerce_request('get', "#{order_id}/fulfillments", {}, {}, request_body)
     end
 
     def commerce_request(method, route='', headers={}, parameters={}, body=nil)
