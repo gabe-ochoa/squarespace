@@ -1,6 +1,3 @@
-require 'squarespace'
-require 'squarespace/configuration'
-require 'squarespace/order'
 require 'faraday'
 require 'json'
 require 'logger'

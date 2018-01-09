@@ -1,5 +1,3 @@
-require 'squarespace'
-
 module Squarespace
   class Config
     attr_reader :api_url, :api_key, :app_name

@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "faraday"
   spec.add_dependency "json"
+  spec.required_ruby_version = '~> 2.4.0'
 end
