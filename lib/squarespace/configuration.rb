@@ -1,4 +1,4 @@
-require 'Squarespace'
+require 'squarespace'
 
 module Squarespace
   class Config

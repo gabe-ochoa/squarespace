@@ -1,5 +1,7 @@
 # SquareSpace Commerce API
 
+[![Gem Version](https://badge.fury.io/rb/squarespace.svg)](https://badge.fury.io/rb/squarespace)
+
 Ruby gem for interacting with the Squarespace API.
 
 ## Installation

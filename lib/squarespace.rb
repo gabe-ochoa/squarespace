@@ -1,6 +1,6 @@
-require 'Squarespace/client'
-require 'Squarespace/configuration'
-require 'Squarespace/version'
+require 'squarespace/client'
+require 'squarespace/configuration'
+require 'squarespace/version'
 
 module Squarespace
 
