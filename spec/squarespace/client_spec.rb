@@ -75,6 +75,42 @@ describe Squarespace::Client do
       end
     end
 
+    it 'parises the response body as json' do
+      valid_body = "{\"valid\":\"json\"}"
+      parsed_body = client.parse_commerce_response_body(valid_body)
+
+      expect(parsed_body['valid']).to eq 'json'
+    end
+
+    it 'errors gracefully when parising the response body as json' do
+      invalid_body = '{\"invalid\" \"json\"}'
+      expect{ client.parse_commerce_response_body(invalid_body) }.to raise_error(JSON::ParserError)
+    end
+
+    it 'checks the response code' do
+      expect{ client.check_response_status(200) }.not_to raise_error(Squarespace::Errors::BadRequest)
+    end
+
+    it 'checks the response code and raises when there is a bad request' do
+      expect{ client.check_response_status(400) }.to raise_error(Squarespace::Errors::BadRequest)
+    end
+
+    it 'checks the response code and raise an exception when there are authentication errors' do
+      expect{ client.check_response_status(401) }.to raise_error(Squarespace::Errors::Unauthorized)
+    end
+
+    it 'checks the response code and raises an exception when not found' do
+      expect{ client.check_response_status(404) }.to raise_error(Squarespace::Errors::NotFound)
+    end
+
+    it 'checks the response code and raises an exception when an incorrect method was called' do
+      expect{ client.check_response_status(405) }.to raise_error(Squarespace::Errors::MethodNotAllowed)
+    end
+
+    it 'checks the response code and raises when there have been too many requests' do
+      expect{ client.check_response_status(429) }.to raise_error(Squarespace::Errors::TooManyRequests)
+    end
+
     it 'fulfill an order' do
       Timecop.freeze
       body_fixture = JSON.parse(load_fixture('spec/fixtures/fulfill_order_body.json'), symbolize_names: true)
