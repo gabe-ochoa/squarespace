@@ -3,6 +3,7 @@ require 'json'
 require 'logger'
 require 'time'
 
+
 module Squarespace
   class Client
     attr_reader :commerce_url, :logger
@@ -11,7 +12,11 @@ module Squarespace
 
     def initialize(options={})
       @logger = Logger.new(STDOUT)
-      @logger.level = options.delete('log_level') || 'INFO'
+      if ENV['LOG_LEVEL'].nil?
+        @logger.level = options.delete('log_level') || 'INFO'
+      else
+        @logger.level = ENV['LOG_LEVEL']
+      end
       @config = Squarespace::Config.new(options)
       @commerce_url = "#{@config.api_url}/#{COMMERCE_API_VERSION}/commerce/orders"
     end
@@ -26,13 +31,44 @@ module Squarespace
       if fulfillment_status.nil?
         order_response = commerce_request('get')
       else
-        # binding.pry
         order_response = commerce_request('get', '', {}, 
           {"fulfillmentStatus"=>fulfillment_status.upcase})
       end
 
       logger.debug("Order response: #{order_response.body}")
-      Order.new(JSON.parse(order_response.body))
+      check_response_status(order_response.status)
+      parsed_body = parse_commerce_response_body(order_response.body)
+      
+      Order.new(parsed_body)
+    end
+
+    def parse_commerce_response_body(body)
+      begin
+        parsed_response = JSON.parse(body)
+      rescue JSON::ParserError => e
+        logger.error("Error parsing response body as JSON: #{body}")
+        raise e
+      end
+      return parsed_response
+    end
+
+    def check_response_status(code)
+      case code
+      when 200
+        return code
+      when 400
+        raise Squarespace::Errors::BadRequest
+      when 401
+        raise Squarespace::Errors::Unauthorized
+      when 404
+        raise Squarespace::Errors::NotFound
+      when 405
+        raise Squarespace::Errors::MethodNotAllowed
+      when 429
+        raise Squarespace::Errors::TooManyRequests
+      else
+        return code
+      end
     end
 
     def get_pending_orders
@@ -102,6 +138,24 @@ module Squarespace
         faraday.request  :url_encoded
         faraday.adapter  Faraday.default_adapter
       end
+    end
+  end
+  
+  class Errors
+    class BadRequest < StandardError
+      ;
+    end
+    class Unauthorized < StandardError
+      ;
+    end
+    class NotFound < StandardError
+      ;
+    end
+    class MethodNotAllowed < StandardError
+      ;
+    end
+    class TooManyRequests < StandardError
+      ;
     end
   end
 end

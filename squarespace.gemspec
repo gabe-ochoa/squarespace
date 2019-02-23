@@ -19,14 +19,16 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "timecop"
+  spec.add_development_dependency "rb-readline"
 
   spec.add_dependency "faraday"
   spec.add_dependency "json"
-  spec.required_ruby_version = '~> 2.4.0'
+  spec.required_ruby_version = '~> 2.4.1'
 end
+  
