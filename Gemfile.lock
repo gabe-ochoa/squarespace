@@ -18,7 +18,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     hashdiff (0.3.4)
-    json (2.1.0)
+    json (2.3.1)
     method_source (0.8.2)
     multipart-post (2.0.0)
     pry (0.10.4)
