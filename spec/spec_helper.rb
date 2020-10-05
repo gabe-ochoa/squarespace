@@ -1,23 +1,23 @@
-require 'simplecov'
-require 'webmock/rspec'
-require 'pry'
+require "simplecov"
+require "webmock/rspec"
+require "pry"
 SimpleCov.start
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'squarespace'
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "squarespace"
 
-def stub_faraday_request(return_object, method, url='', headers={}, params={}, body=nil)
+def stub_faraday_request(return_object, method, url = "", headers = {}, params = {}, body = nil)
   # Add in default headers that Squarespace excepts on every request
-  headers.merge({
+  headers.merge(
     "Content-Type" => "application/json",
-    "Authorization" => "Bearer test_key"
-  })
+    "Authorization" => "Bearer test_key",
+  )
 
-  request = instance_double(Faraday::Request, 
-    headers: {}, 
-    params: {},
-    url: nil,
-    body: nil)
+  request = instance_double(Faraday::Request,
+                            headers: {},
+                            params: {},
+                            url: nil,
+                            body: nil)
 
   expect(request).to receive(:body=).with(body) unless body.nil?
   expect(request).to receive(:params) unless params.empty?
@@ -29,29 +29,29 @@ def stub_faraday_request(return_object, method, url='', headers={}, params={}, b
 end
 
 def stub_faraday_response(status, body)
-  if (200..299).include?(status)
-    success = true
-  else
-    success = false
-  end
+  success = if (200..299).cover?(status)
+              true
+            else
+              false
+            end
 
-  stub_response = object_double('response', body: body, status: status, success?: success)
+  stub_response = object_double("response", body: body, status: status, success?: success)
 end
 
 def stub_order_object
-  stub_faraday_response(200, load_fixture('spec/fixtures/order_response.json'))
+  stub_faraday_response(200, load_fixture("spec/fixtures/order_response.json"))
 end
 
 def stub_orders_object
-  stub_faraday_response(200, load_fixture('spec/fixtures/orders_response.json'))
+  stub_faraday_response(200, load_fixture("spec/fixtures/orders_response.json"))
 end
 
 def stub_pending_orders_object
-  stub_faraday_response(200, load_fixture('spec/fixtures/pending_orders_response.json'))
+  stub_faraday_response(200, load_fixture("spec/fixtures/pending_orders_response.json"))
 end
 
 def stub_fulfilled_orders_object
-  stub_faraday_response(200, load_fixture('spec/fixtures/fulfilled_orders_response.json'))
+  stub_faraday_response(200, load_fixture("spec/fixtures/fulfilled_orders_response.json"))
 end
 
 def stub_fulfill_order_object
